@@ -11,6 +11,8 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Microsoft.OpenApi.Models;
+using ProductsEx.Application;
+using ProductsEx.Infrastructure;
 using ProductsEx.Application.Services;
 
 namespace ProductsEx.Api
@@ -28,12 +30,14 @@ namespace ProductsEx.Api
         public void ConfigureServices(IServiceCollection services)
         {
 
+            services.AddApplication()
+                    .AddInfrastructure();
             services.AddControllers();
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "ProductsEx.Api", Version = "v1" });
             });
-            services.AddScoped<IAuthenticationService, AuthenticationService>();
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
