@@ -7,11 +7,19 @@ using System.Text;
 using System.Threading.Tasks;
 using Microsoft.IdentityModel.Tokens;
 using ProductsEx.Application.Common.Interfaces.Authentication;
+using ProductsEx.Application.Common.Services;
 
 namespace ProductsEx.Infrastructure.Authentication
 {
     public class JwtTokenGenerator : IJwtTokenGenerator
     {
+        private readonly IDateTimeProvider _dateTimeProvider;
+
+        public JwtTokenGenerator(IDateTimeProvider dateTimeProvider)
+        {
+            _dateTimeProvider = dateTimeProvider;
+        }
+
         public string GenerateToken(Guid userId, string firstName, string lastName)
         {
             var signingCredentials = new SigningCredentials(
@@ -29,7 +37,7 @@ namespace ProductsEx.Infrastructure.Authentication
 
             var securityToken = new JwtSecurityToken(issuer: "ProductsEx",
             claims: claims,
-            expires: DateTime.Now.AddDays(1),
+            expires: _dateTimeProvider.UtcNow.AddMinutes(60),
             signingCredentials: signingCredentials);
 
             return new JwtSecurityTokenHandler().WriteToken(securityToken);
