@@ -31,7 +31,7 @@ namespace ProductsEx.Api
         {
 
             services.AddApplication()
-                    .AddInfrastructure();
+                    .AddInfrastructure(Configuration);
             services.AddControllers();
             services.AddSwaggerGen(c =>
             {
