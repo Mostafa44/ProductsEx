@@ -31,10 +31,10 @@ namespace ProductsEx.Api.Controllers
                                                                     request.LastName,
                                                                     request.Email,
                                                                     request.Password);
-            var response = new AuthenticationResponse(authenticationResult.Id,
-                                                     authenticationResult.FirstName,
-                                                     authenticationResult.LastName,
-                                                     authenticationResult.Email,
+            var response = new AuthenticationResponse(authenticationResult.User.Id,
+                                                     authenticationResult.User.FirstName,
+                                                     authenticationResult.User.LastName,
+                                                     authenticationResult.User.Email,
                                                      authenticationResult.Token);
             return Ok(response);
         }
@@ -44,10 +44,10 @@ namespace ProductsEx.Api.Controllers
         {
             var authenticationResult = _authenticationService.Login(request.Email,
                                                                    request.Password);
-            var response = new AuthenticationResponse(authenticationResult.Id,
-                                                  authenticationResult.FirstName,
-                                                  authenticationResult.LastName,
-                                                  authenticationResult.Email,
+            var response = new AuthenticationResponse(authenticationResult.User.Id,
+                                                  authenticationResult.User.FirstName,
+                                                  authenticationResult.User.LastName,
+                                                  authenticationResult.User.Email,
                                                   authenticationResult.Token);
             return Ok(response);
         }

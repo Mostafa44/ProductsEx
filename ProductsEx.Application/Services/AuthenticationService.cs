@@ -30,14 +30,9 @@ namespace ProductsEx.Application.Services
             {
                 throw new Exception("Password is not correct!");
             }
-            var token = _jwtTokenGenerator.GenerateToken(user.Id,
-                                                         user.FirstName,
-                                                         user.LastName);
+            var token = _jwtTokenGenerator.GenerateToken(user);
             return new AuthenticationResult(
-            user.Id,
-            user.FirstName,
-            user.LastName,
-            email,
+           user,
             token);
         }
 
@@ -57,11 +52,8 @@ namespace ProductsEx.Application.Services
 
             _userRepository.AddUser(user);
 
-            var token = _jwtTokenGenerator.GenerateToken(user.Id, firstName, lastName);
-            return new AuthenticationResult(user.Id,
-            firstName,
-            lastName,
-            email,
+            var token = _jwtTokenGenerator.GenerateToken(user);
+            return new AuthenticationResult(user,
             token);
         }
     }
