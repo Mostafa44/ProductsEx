@@ -14,6 +14,7 @@ using Microsoft.OpenApi.Models;
 using ProductsEx.Application;
 using ProductsEx.Infrastructure;
 using ProductsEx.Application.Services;
+using ProductsEx.Api.Middleware;
 
 namespace ProductsEx.Api
 {
@@ -49,7 +50,7 @@ namespace ProductsEx.Api
                 app.UseSwagger();
                 app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "ProductsEx.Api v1"));
             }
-
+            app.UseMiddleware<ErrorHandlingMiddleware>();
             app.UseHttpsRedirection();
 
             app.UseRouting();
