@@ -8,7 +8,8 @@ using ProductsEx.Application.Common.Interfaces.Authentication;
 using ProductsEx.Application.Common.Services;
 using ProductsEx.Infrastructure.Authentication;
 using ProductsEx.Infrastructure.Services;
-
+using ProductsEx.Application.Persistence;
+using ProductsEx.Infrastructure.Persistence;
 
 namespace ProductsEx.Infrastructure
 {
@@ -20,6 +21,7 @@ namespace ProductsEx.Infrastructure
             services.Configure<JwtSettings>(configuration.GetSection(JwtSettings.SectionName));
             services.AddScoped<IJwtTokenGenerator, JwtTokenGenerator>();
             services.AddSingleton<IDateTimeProvider, DateTimeProvider>();
+            services.AddScoped<IUserRepository, UserRepository>();
             return services;
         }
     }
