@@ -34,7 +34,7 @@ namespace ProductsEx.Api
 
             services.AddApplication()
                     .AddInfrastructure(Configuration);
-            services.AddControllers(options => options.Filters.Add<ErrorHandlingFilterAttribute>());
+            services.AddControllers();
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "ProductsEx.Api", Version = "v1" });
@@ -52,6 +52,7 @@ namespace ProductsEx.Api
                 app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "ProductsEx.Api v1"));
             }
             //app.UseMiddleware<ErrorHandlingMiddleware>();
+            app.UseExceptionHandler("/error");
             app.UseHttpsRedirection();
 
             app.UseRouting();

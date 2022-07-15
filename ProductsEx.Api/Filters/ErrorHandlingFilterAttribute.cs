@@ -21,7 +21,7 @@ namespace ProductsEx.Api.Filters
                 Title = "An error occured while processing your request",
                 Status = (int)HttpStatusCode.InternalServerError,
 
-            }
+            };
             context.Result = new ObjectResult(problemDetails);
             context.ExceptionHandled = true;
         }
