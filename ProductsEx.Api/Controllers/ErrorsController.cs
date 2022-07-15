@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Diagnostics;
 using Microsoft.AspNetCore.Mvc;
 
 namespace ProductsEx.Api.Controllers
@@ -12,7 +13,8 @@ namespace ProductsEx.Api.Controllers
         [Route("/error")]
         public IActionResult Error()
         {
-            return Problem(statusCode: 400);
+            var ex = HttpContext.Features.Get<IExceptionHandlerFeature>().Error;
+            return Problem(title: ex.Message, statusCode: 400);
         }
 
     }
