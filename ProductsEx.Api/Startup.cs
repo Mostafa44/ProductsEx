@@ -15,6 +15,7 @@ using ProductsEx.Application;
 using ProductsEx.Infrastructure;
 using ProductsEx.Application.Services;
 using ProductsEx.Api.Middleware;
+using ProductsEx.Api.Filters;
 
 namespace ProductsEx.Api
 {
@@ -33,7 +34,7 @@ namespace ProductsEx.Api
 
             services.AddApplication()
                     .AddInfrastructure(Configuration);
-            services.AddControllers();
+            services.AddControllers(options => options.Filters.Add<ErrorHandlingFilterAttribute>());
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "ProductsEx.Api", Version = "v1" });
@@ -50,7 +51,7 @@ namespace ProductsEx.Api
                 app.UseSwagger();
                 app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "ProductsEx.Api v1"));
             }
-            app.UseMiddleware<ErrorHandlingMiddleware>();
+            //app.UseMiddleware<ErrorHandlingMiddleware>();
             app.UseHttpsRedirection();
 
             app.UseRouting();
