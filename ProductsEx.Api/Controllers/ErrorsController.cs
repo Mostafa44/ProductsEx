@@ -13,8 +13,8 @@ namespace ProductsEx.Api.Controllers
         [Route("/error")]
         public IActionResult Error()
         {
-            var ex = HttpContext.Features.Get<IExceptionHandlerFeature>().Error;
-            return Problem(title: ex.Message, statusCode: 400);
+            var ex = HttpContext.Features.Get<IExceptionHandlerFeature>()?.Error;
+            return Problem(title: ex?.Message, statusCode: 400);
         }
 
     }

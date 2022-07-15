@@ -16,6 +16,8 @@ using ProductsEx.Infrastructure;
 using ProductsEx.Application.Services;
 using ProductsEx.Api.Middleware;
 using ProductsEx.Api.Filters;
+using Microsoft.AspNetCore.Mvc.Infrastructure;
+using ProductsEx.Api.Errors;
 
 namespace ProductsEx.Api
 {
@@ -39,6 +41,7 @@ namespace ProductsEx.Api
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "ProductsEx.Api", Version = "v1" });
             });
+            services.AddSingleton<ProblemDetailsFactory, ProductsExProblemDetailsFactory>();
 
         }
 
