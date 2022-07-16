@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using FluentResults;
 using ProductsEx.Application.Common.Errors;
 using ProductsEx.Application.Common.Interfaces.Authentication;
 using ProductsEx.Application.Persistence;
@@ -37,11 +38,11 @@ namespace ProductsEx.Application.Services
             token);
         }
 
-        public AuthenticationResult Register(string firstName, string lastName, string email, string password)
+        public Result<AuthenticationResult> Register(string firstName, string lastName, string email, string password)
         {
             if (_userRepository.GetUserByEmail(email) is not null)
             {
-                throw new DuplicateEmailException();
+                return Result.Fail<AuthenticationResult>(new[] { new DuplicateEmailError() });
             }
             var user = new User
             {
