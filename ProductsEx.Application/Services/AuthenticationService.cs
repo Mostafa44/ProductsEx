@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using ProductsEx.Application.Common.Errors;
 using ProductsEx.Application.Common.Interfaces.Authentication;
 using ProductsEx.Application.Persistence;
 using ProductsEx.Domain.Entities;
@@ -40,7 +41,7 @@ namespace ProductsEx.Application.Services
         {
             if (_userRepository.GetUserByEmail(email) is not null)
             {
-                throw new Exception("User with this email already exists!");
+                throw new DuplicateEmailException();
             }
             var user = new User
             {
