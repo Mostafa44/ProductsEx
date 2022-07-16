@@ -9,7 +9,7 @@ using Microsoft.AspNetCore.Mvc.Infrastructure;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
 using Microsoft.Extensions.Options;
 
-namespace ProductsEx.Api.Errors
+namespace ProductsEx.Api.Common.Errors
 {
     public class ProductsExProblemDetailsFactory : ProblemDetailsFactory
     {

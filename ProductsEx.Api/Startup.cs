@@ -17,7 +17,7 @@ using ProductsEx.Application.Services;
 using ProductsEx.Api.Middleware;
 using ProductsEx.Api.Filters;
 using Microsoft.AspNetCore.Mvc.Infrastructure;
-using ProductsEx.Api.Errors;
+using ProductsEx.Api.Common.Errors;
 
 namespace ProductsEx.Api
 {

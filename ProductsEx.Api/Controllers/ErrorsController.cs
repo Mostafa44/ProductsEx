@@ -14,7 +14,7 @@ namespace ProductsEx.Api.Controllers
         public IActionResult Error()
         {
             var ex = HttpContext.Features.Get<IExceptionHandlerFeature>()?.Error;
-            return Problem(title: ex?.Message, statusCode: 400);
+            return Problem();
         }
 
     }
