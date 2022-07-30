@@ -4,7 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using ProductsEx.Domain.Entities;
 
-namespace ProductsEx.Application.Services
+namespace ProductsEx.Application.Services.Authentication.Common
 {
     public record AuthenticationResult(
         User User,

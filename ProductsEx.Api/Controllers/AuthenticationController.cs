@@ -10,6 +10,7 @@ using Microsoft.Extensions.Logging;
 using ProductsEx.Application.Common.Errors;
 using ProductsEx.Application.Services;
 using ProductsEx.Application.Services.Authentication.Commands;
+using ProductsEx.Application.Services.Authentication.Common;
 using ProductsEx.Application.Services.Authentication.Queries;
 using ProductsEx.Contracts.Authentication;
 

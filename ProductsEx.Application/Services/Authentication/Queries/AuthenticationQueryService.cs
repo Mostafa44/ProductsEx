@@ -6,6 +6,7 @@ using FluentResults;
 using ProductsEx.Application.Common.Errors;
 using ProductsEx.Application.Common.Interfaces.Authentication;
 using ProductsEx.Application.Persistence;
+using ProductsEx.Application.Services.Authentication.Common;
 using ProductsEx.Domain.Entities;
 
 namespace ProductsEx.Application.Services.Authentication.Queries
