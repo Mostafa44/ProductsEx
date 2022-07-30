@@ -13,7 +13,6 @@ using Microsoft.Extensions.Logging;
 using Microsoft.OpenApi.Models;
 using ProductsEx.Application;
 using ProductsEx.Infrastructure;
-using ProductsEx.Application.Services;
 using ProductsEx.Api.Middleware;
 using ProductsEx.Api.Filters;
 using Microsoft.AspNetCore.Mvc.Infrastructure;

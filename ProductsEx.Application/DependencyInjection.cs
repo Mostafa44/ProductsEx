@@ -2,9 +2,8 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using MediatR;
 using Microsoft.Extensions.DependencyInjection;
-using ProductsEx.Application.Services.Authentication.Commands;
-using ProductsEx.Application.Services.Authentication.Queries;
 
 namespace ProductsEx.Application
 {
@@ -12,8 +11,7 @@ namespace ProductsEx.Application
     {
         public static IServiceCollection AddApplication(this IServiceCollection services)
         {
-            services.AddScoped<IAuthenticationCommandService, AuthenticationCommandService>();
-            services.AddScoped<IAuthenticationQueryService, AuthenticationQueryService>();
+            services.AddMediatR(typeof(DependencyInjection).Assembly);
             return services;
         }
     }

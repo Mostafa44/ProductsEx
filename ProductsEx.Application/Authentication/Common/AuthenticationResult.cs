@@ -4,11 +4,11 @@ using System.Linq;
 using System.Threading.Tasks;
 using ProductsEx.Domain.Entities;
 
-namespace ProductsEx.Application.Services.Authentication.Common
+namespace ProductsEx.Application.Authentication.Common
 {
     public record AuthenticationResult(
-        User User,
-        string Token
+         User User,
+         string Token
 
-    );
+     );
 }

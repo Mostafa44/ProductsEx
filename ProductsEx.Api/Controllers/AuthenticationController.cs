@@ -4,14 +4,14 @@ using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
 using FluentResults;
+using MediatR;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
+using ProductsEx.Application.Authentication.Commands.Register;
+using ProductsEx.Application.Authentication.Queries.Login;
 using ProductsEx.Application.Common.Errors;
-using ProductsEx.Application.Services;
-using ProductsEx.Application.Services.Authentication.Commands;
-using ProductsEx.Application.Services.Authentication.Common;
-using ProductsEx.Application.Services.Authentication.Queries;
+using ProductsEx.Application.Authentication.Common;
 using ProductsEx.Contracts.Authentication;
 
 namespace ProductsEx.Api.Controllers
@@ -21,25 +21,24 @@ namespace ProductsEx.Api.Controllers
     public class AuthenticationController : ControllerBase
     {
         private readonly ILogger<AuthenticationController> _logger;
-        private readonly IAuthenticationCommandService _authenticationCommandService;
-        private readonly IAuthenticationQueryService _authenticationQueryService;
+        private readonly IMediator _mediator;
 
         public AuthenticationController(ILogger<AuthenticationController> logger,
-                                         IAuthenticationCommandService authenticationCommandService,
-                                         IAuthenticationQueryService authenticationQueryService)
+                                         IMediator mediator)
         {
             _logger = logger;
-            _authenticationCommandService = authenticationCommandService;
-            _authenticationQueryService = authenticationQueryService;
+            _mediator = mediator;
         }
 
         [HttpPost("register")]
-        public IActionResult Register(RegisterRequest request)
+        public async Task<IActionResult> Register(RegisterRequest request)
         {
-            Result<AuthenticationResult> registerResult = _authenticationCommandService.Register(request.FirstName,
-                                                                    request.LastName,
-                                                                    request.Email,
-                                                                    request.Password);
+            var command = new RegisterCommand(request.FirstName,
+                                              request.LastName,
+                                              request.Email,
+                                              request.Password);
+
+            Result<AuthenticationResult> registerResult = await _mediator.Send(command);
             if (registerResult.IsSuccess)
             {
                 return Ok(MapToAuthResult(registerResult.Value));
@@ -64,10 +63,10 @@ namespace ProductsEx.Api.Controllers
         }
 
         [HttpPost("login")]
-        public IActionResult Login(LoginRequest request)
+        public async Task<IActionResult> Login(LoginRequest request)
         {
-            var authenticationResult = _authenticationQueryService.Login(request.Email,
-                                                                   request.Password);
+            var loginQuery = new LoginQuery(request.Email, request.Password);
+            var authenticationResult = await _mediator.Send(loginQuery);
             var response = new AuthenticationResponse(authenticationResult.User.Id,
                                                   authenticationResult.User.FirstName,
                                                   authenticationResult.User.LastName,
