@@ -8,14 +8,14 @@ using ProductsEx.Application.Common.Interfaces.Authentication;
 using ProductsEx.Application.Persistence;
 using ProductsEx.Domain.Entities;
 
-namespace ProductsEx.Application.Services
+namespace ProductsEx.Application.Services.Authentication.Queries
 {
-    public class AuthenticationService : IAuthenticationService
+    public class AuthenticationQueryService : IAuthenticationQueryService
     {
         private readonly IJwtTokenGenerator _jwtTokenGenerator;
         private readonly IUserRepository _userRepository;
 
-        public AuthenticationService(IJwtTokenGenerator jwtTokenGenerator,
+        public AuthenticationQueryService(IJwtTokenGenerator jwtTokenGenerator,
                                      IUserRepository userRepository)
         {
             _jwtTokenGenerator = jwtTokenGenerator;
@@ -38,25 +38,6 @@ namespace ProductsEx.Application.Services
             token);
         }
 
-        public Result<AuthenticationResult> Register(string firstName, string lastName, string email, string password)
-        {
-            if (_userRepository.GetUserByEmail(email) is not null)
-            {
-                return Result.Fail<AuthenticationResult>(new[] { new DuplicateEmailError() });
-            }
-            var user = new User
-            {
-                FirstName = firstName,
-                LastName = lastName,
-                Email = email,
-                Password = password
-            };
 
-            _userRepository.AddUser(user);
-
-            var token = _jwtTokenGenerator.GenerateToken(user);
-            return new AuthenticationResult(user,
-            token);
-        }
     }
 }

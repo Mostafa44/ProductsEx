@@ -4,11 +4,11 @@ using System.Linq;
 using System.Threading.Tasks;
 using FluentResults;
 
-namespace ProductsEx.Application.Services
+namespace ProductsEx.Application.Services.Authentication.Commands
 {
-    public interface IAuthenticationService
+    public interface IAuthenticationCommandService
     {
-        AuthenticationResult Login(string email, string password);
+
         Result<AuthenticationResult> Register(string firsttName, string lastName, string email, string password);
     }
 }

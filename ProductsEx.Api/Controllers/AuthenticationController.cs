@@ -9,6 +9,8 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using ProductsEx.Application.Common.Errors;
 using ProductsEx.Application.Services;
+using ProductsEx.Application.Services.Authentication.Commands;
+using ProductsEx.Application.Services.Authentication.Queries;
 using ProductsEx.Contracts.Authentication;
 
 namespace ProductsEx.Api.Controllers
@@ -18,19 +20,22 @@ namespace ProductsEx.Api.Controllers
     public class AuthenticationController : ControllerBase
     {
         private readonly ILogger<AuthenticationController> _logger;
-        private readonly IAuthenticationService _authenticationService;
+        private readonly IAuthenticationCommandService _authenticationCommandService;
+        private readonly IAuthenticationQueryService _authenticationQueryService;
 
         public AuthenticationController(ILogger<AuthenticationController> logger,
-                                         IAuthenticationService authenticationService)
+                                         IAuthenticationCommandService authenticationCommandService,
+                                         IAuthenticationQueryService authenticationQueryService)
         {
             _logger = logger;
-            _authenticationService = authenticationService;
+            _authenticationCommandService = authenticationCommandService;
+            _authenticationQueryService = authenticationQueryService;
         }
 
         [HttpPost("register")]
         public IActionResult Register(RegisterRequest request)
         {
-            Result<AuthenticationResult> registerResult = _authenticationService.Register(request.FirstName,
+            Result<AuthenticationResult> registerResult = _authenticationCommandService.Register(request.FirstName,
                                                                     request.LastName,
                                                                     request.Email,
                                                                     request.Password);
@@ -60,7 +65,7 @@ namespace ProductsEx.Api.Controllers
         [HttpPost("login")]
         public IActionResult Login(LoginRequest request)
         {
-            var authenticationResult = _authenticationService.Login(request.Email,
+            var authenticationResult = _authenticationQueryService.Login(request.Email,
                                                                    request.Password);
             var response = new AuthenticationResponse(authenticationResult.User.Id,
                                                   authenticationResult.User.FirstName,
